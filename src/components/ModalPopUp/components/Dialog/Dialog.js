@@ -10,6 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import EmailTemplate from './HtmlTemplate';
+import axios from 'axios';
 
 const styles = (theme) => ({
     root: {
@@ -67,6 +68,22 @@ const CustomizedDialogs = forwardRef((props, ref) => {
             }
         }),
     )
+    const handleEmailTemplateSubmit = () => {
+
+        const user = {
+            subject: 'AdsRevenue',
+            htmlTemplate: previewHtml
+        };
+
+        axios.post(`${process.env.REACT_APP_BASE_URL}/api/client/postemail/create`, { user })
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+                handleClose();
+            }).catch((err) => {
+                console.error('Error Sending Email...', err);
+            });
+    }
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -93,8 +110,8 @@ const CustomizedDialogs = forwardRef((props, ref) => {
                     <Button variant="contained" onClick={handleClose} color="secondary">
                         Cancel
                     </Button>
-                    <Button variant="contained" onClick={handleClose} color="primary">
-                        Continue
+                    <Button variant="contained" onClick={handleEmailTemplateSubmit} color="primary">
+                        Send Email
                     </Button>
                 </DialogActions>
             </Dialog>

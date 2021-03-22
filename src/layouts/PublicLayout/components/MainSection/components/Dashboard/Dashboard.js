@@ -1,10 +1,10 @@
 import React from 'react';
 import Lottie from 'react-lottie';
 import animationData from '../../../../../../lotties/admin.json';
-import { EmployeeInfo, LoggedInEmployees, TotalTeams, HelpCenter, SalesPersonFilter, EmailTemplateCards } from "../../components";
-import './banner.css';
+import { EmployeeInfo, LoggedInEmployees, TotalTeams, HelpCenter, SalesPersonFilter, EmailTemplateCards } from "..";
+import './Dashboard.css';
 
-const Banner = () => {
+const Dashboard = () => {
     const defaultOptions = {
         loop: true,
         autoplay: true,
@@ -65,4 +65,4 @@ const Banner = () => {
     )
 }
 
-export default Banner;
+export default Dashboard;

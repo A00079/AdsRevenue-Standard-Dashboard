@@ -52,7 +52,13 @@ import EmailIcon from '@material-ui/icons/Email';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import Button from '@material-ui/core/Button';
 import { Gauge } from '../../../../../../components/GraphComponents/components';
-import { Banner } from '../../../MainSection/components';
+import { Dashboard } from '../../../MainSection/components';
+import { AddEmployees } from '../../../MainSection/Views/components';
+import HomeIcon from '@material-ui/icons/Home';
+import { withRouter } from "react-router-dom";
+import standardApi from '../../../../../../utils/standardApi/standardApi.js';
+import Cookies from 'js-cookie';
+
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -194,15 +200,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function MiniDrawer() {
+const MiniDrawer = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
-    const [activePanelNumber, setActivePanelNumber] = React.useState('1');
+    const [activePanelNumber, setActivePanelNumber] = React.useState('5');
+    const [activeRoute, setActiveRoute] = React.useState('/');
 
     React.useEffect(() => {
+        console.log('props', props.history.location);
+        let splitRoute = props.history.location.pathname.split('/');
+        if (props.history.location.pathname == '/') {
+            setActiveRoute(props.history.location.pathname);
+        } else {
+            setActiveRoute(splitRoute[1]);
+        }
         getCurrentDate();
-    });
+    }, [props]);
 
     const activePanel = (item) => {
         if (item == 'manageemployees') {
@@ -213,7 +227,8 @@ export default function MiniDrawer() {
             setActivePanelNumber('3');
         } else if (item == 'shootmessages') {
             setActivePanelNumber('4');
-        } else if (item == 'viewhistory') {
+        } else if (item == 'home') {
+            props.history.push('/');
             setActivePanelNumber('5');
         }
         handleDrawerOpen();
@@ -258,6 +273,11 @@ export default function MiniDrawer() {
     }
     const handleDrawerOpen = () => {
         setOpen(true);
+    };
+
+    const handleRouteChange = (currentRoute) => {
+        setActiveRoute(currentRoute);
+        props.history.push('/' + currentRoute);
     };
 
     const handleDrawerClose = () => {
@@ -332,6 +352,12 @@ export default function MiniDrawer() {
             }
         }
     };
+
+    const handleSyncData = () => {
+        standardApi.read('/syncdata',Cookies.get('access')).then((response) => {
+            console.log('sync data', response.data);
+        });
+    }
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -437,7 +463,7 @@ export default function MiniDrawer() {
                             />
                         </div>
                         <div className={classes.grow} />
-                        <Button variant="contained" size="small" style={{ backgroundColor: '#068F38', marginRight: '10px' }}>
+                        <Button onClick={() => { handleSyncData() }} variant="contained" size="small" style={{ backgroundColor: '#068F38', marginRight: '10px' }}>
                             <div className="flex flex-row justify-between items-center space-x-1">
                                 <HistoryIcon className="text-white" />
                                 <small className="text-xs font-bold text-white capitalize">Sync Data</small>
@@ -526,9 +552,19 @@ export default function MiniDrawer() {
                     open ? <h4 className="text-gray-600 font-bold ml-3">Navigation</h4> : ""
                 }
                 <List>
+                    <div onClick={() => activePanel('home')} className={activePanelNumber == '5' ? 'border-blue-700 border-l-4 rounded-r-full bg-indigo-100' : 'hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100'}>
+                        <ListItem button>
+                            <ListItemIcon style={open ? { minWidth: '40px' } : { minWidth: '60px' }}>
+                                <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
+                                    <HomeIcon className={open ? 'text-blue-700' : 'text-blue-700'} />
+                                </div>
+                            </ListItemIcon>
+                            <ListItemText><span className="text-sm text-purple-800 font-bold">Home</span></ListItemText>
+                        </ListItem>
+                    </div>
                     <div onClick={() => activePanel('manageemployees')} className={activePanelNumber == '1' ? 'border-blue-700 border-l-4 rounded-r-full bg-indigo-100' : 'hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100'}>
                         <ListItem button onClick={handleEmployees}>
-                            <ListItemIcon style={{ minWidth: '40px' }}>
+                            <ListItemIcon style={open ? { minWidth: '40px' } : { minWidth: '60px' }}>
                                 <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
                                     <GroupAddIcon className={open ? 'text-red-800' : 'text-red-800'} />
                                 </div>
@@ -539,7 +575,7 @@ export default function MiniDrawer() {
                     </div>
                     <Collapse in={openEmployees} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            <ListItem button className={classes.nested}>
+                            <ListItem button className={classes.nested} onClick={() => { handleRouteChange('add-employees') }}>
                                 <ListItemIcon>
                                     <div className="bg-indigo-100 p-0 rounded ">
                                         <AddBoxIcon className={open ? 'text-green-700' : 'text-green-700'} />
@@ -575,7 +611,7 @@ export default function MiniDrawer() {
                     </Collapse>
                     <div onClick={() => activePanel('shootemails')} className={activePanelNumber == '2' ? 'border-blue-700 border-l-4 rounded-r-full bg-indigo-100' : 'hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100'}>
                         <ListItem button onClick={handleShootemails}>
-                            <ListItemIcon style={{ minWidth: '40px' }}>
+                            <ListItemIcon style={open ? { minWidth: '40px' } : { minWidth: '60px' }}>
                                 <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
                                     <EmailIcon className={open ? 'text-red-800' : 'text-red-800'} />
                                 </div>
@@ -614,7 +650,7 @@ export default function MiniDrawer() {
                     </Collapse>
                     <div onClick={() => activePanel('emailtemplates')} className={activePanelNumber == '3' ? 'border-blue-700 border-l-4 rounded-r-full bg-indigo-100' : 'hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100'}>
                         <ListItem button onClick={handleEmailTemplates}>
-                            <ListItemIcon style={{ minWidth: '40px' }}>
+                            <ListItemIcon style={open ? { minWidth: '40px' } : { minWidth: '60px' }}>
                                 <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
                                     <ReceiptIcon className={open ? 'text-purple-800' : 'text-purple-800'} />
                                 </div>
@@ -693,7 +729,7 @@ export default function MiniDrawer() {
                     </Collapse>
                     <div onClick={() => activePanel('shootmessages')} className={activePanelNumber == '4' ? 'pointer-events-none border-blue-700 border-l-4 rounded-r-full bg-indigo-100' : 'pointer-events-none hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100'}>
                         <ListItem button onClick={handleShootMessages}>
-                            <ListItemIcon style={{ minWidth: '40px' }}>
+                            <ListItemIcon style={open ? { minWidth: '40px' } : { minWidth: '60px' }}>
                                 <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
                                     <RateReviewIcon className={open ? 'text-yellow-500' : 'text-yellow-500'} />
                                 </div>
@@ -714,19 +750,9 @@ export default function MiniDrawer() {
                             </ListItem>
                         </List>
                     </Collapse>
-                    <div onClick={() => activePanel('viewhistory')} className={activePanelNumber == '5' ? 'border-blue-700 border-l-4 rounded-r-full bg-indigo-100' : 'hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100'}>
-                        <ListItem button>
-                            <ListItemIcon style={{ minWidth: '40px' }}>
-                                <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
-                                    <VisibilityIcon className={open ? 'text-gray-700' : 'text-gray-700'} />
-                                </div>
-                            </ListItemIcon>
-                            <ListItemText><span className="text-sm text-purple-800 font-bold">View History</span></ListItemText>
-                        </ListItem>
-                    </div>
                     <div className="hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100">
                         <ListItem button>
-                            <ListItemIcon style={{ minWidth: '40px' }}>
+                            <ListItemIcon style={open ? { minWidth: '40px' } : { minWidth: '60px' }}>
                                 <div className="bg-indigo-100 p-2 rounded -mx-2 sm:-mx-2">
                                     <ExitToAppIcon className={open ? 'text-blue-700' : 'text-blue-700'} />
                                 </div>
@@ -735,11 +761,28 @@ export default function MiniDrawer() {
                         </ListItem>
                     </div>
                 </List>
+                {
+                    open ? <div class="p-2 pt-0 w-full">
+                        <div class="h-full flex items-center border-gray-100 shadow-sm border-2 p-1 rounded-lg">
+                            <img alt="team" class="w-16 h-16 object-cover object-center flex-shrink-0 rounded-lg mr-4" src="/img/feedback.svg" />
+                            <div class="flex-grow w-10 space-y-1">
+                                <h2 class="text-gray-900 title-font text-xs font-medium w-10 word-wrap">Share us your feedback.</h2>
+                                <p class="text-white bg-indigo-600 px-2 text-xs py-1 w-20 rounded-md">Feedback</p>
+                            </div>
+                        </div>
+                    </div> : <img alt="team" class="w-12 h-12 object-cover object-center mx-auto flex-shrink-0 rounded-lg mr-4" src="/img/feedback.svg" />
+                }
+
             </Drawer>
             <main className={clsx(classes.content, 'w-full')}>
                 <div className={classes.toolbar} />
                 <Typography paragraph className="pl-14 sm:pl-20 lg:pl-0">
-                    <Banner />
+                    {
+                        activeRoute == 'home' ? <Dashboard /> : ''
+                    }
+                    {
+                        activeRoute == 'add-employees' ? <AddEmployees /> : ''
+                    }
                 </Typography>
                 <Typography paragraph>
                 </Typography>
@@ -747,3 +790,5 @@ export default function MiniDrawer() {
         </div >
     );
 }
+
+export default withRouter(MiniDrawer);
