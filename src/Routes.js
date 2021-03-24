@@ -23,8 +23,11 @@ import {
 const Routes = (props) => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const history = useHistory();
-  console.log('history',useHistory());
+  console.log('history', useHistory());
   React.useEffect(() => {
+    if (window.location.hash === '#/') {
+      history.push('/sign-in');
+    }
     let accessToken = Cookies.get('access');
     let refreshToken = Cookies.get('refresh');
 
