@@ -69,20 +69,20 @@ const SignIn = (props) => {
                 Cookies.set("access", response.data.accessToken);
                 Cookies.set("refresh", response.data.refreshToken);
                 console.log('response', response);
-                // let authData = {
-                //     accessToken: response.data.accessToken,
-                //     refreshToken: response.data.refreshToken,
-                //     isAuthenticated: true
-                // }
-                // props.authenticateUser(authData);
-                // props.history.push('/home');
+                let authData = {
+                    accessToken: response.data.accessToken,
+                    refreshToken: response.data.refreshToken,
+                    isAuthenticated: true
+                }
+                props.authenticateUser(authData);
+                props.history.push('/home');
             } else {
-                // let authData = {
-                //     accessToken: response.data.accessToken,
-                //     refreshToken: response.data.refreshToken,
-                //     isAuthenticated: false
-                // }
-                // props.authenticateUser(authData);
+                let authData = {
+                    accessToken: response.data.accessToken,
+                    refreshToken: response.data.refreshToken,
+                    isAuthenticated: false
+                }
+                props.authenticateUser(authData);
                 Cookies.remove('access');
                 Cookies.remove('refresh');
                 props.history.push('/sign-in');

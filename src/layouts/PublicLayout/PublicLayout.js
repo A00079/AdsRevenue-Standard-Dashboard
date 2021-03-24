@@ -20,12 +20,12 @@ function PublicLayout(props) {
 }
 
 PublicLayout.propTypes = {
-  authVal: PropTypes.func.isRequired,
+  // authVal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  authVal: state.isAuthenticated,
-  authAccessToken: state.authAccessToken
+  // authVal: state.isAuthenticated,
+  // authAccessToken: state.authAccessToken
 });
 
 export default withRouter(connect(
