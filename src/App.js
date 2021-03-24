@@ -6,9 +6,6 @@ import Routes from "./Routes";
 import "./assets/scss/index.scss";
 
 const App = () => {
-  // const initGA = () => {
-  //   ReactGA.initialize("G-F1J0DYDF27");
-  // };
 
   useEffect(() => {
     // initGA();
