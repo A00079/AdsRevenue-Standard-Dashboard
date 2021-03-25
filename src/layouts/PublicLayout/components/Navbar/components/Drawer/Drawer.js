@@ -427,7 +427,7 @@ const MiniDrawer = (props) => {
                     <Toolbar>
                         <div className="flex flex-row justify-between sm:space-x-8">
                             {
-                                open ? "" : <img src="/img/dashboardLogo.svg" className="hidden sm:block object-contain object-cover w-16 h-16 py-4 -mx-6" />
+                                open ? "" : <img src="/img/DashboardLogo.svg" className="hidden sm:block object-contain object-cover w-16 h-16 py-4 -mx-6" />
                             }
                             <IconButton
                                 color="inherit"

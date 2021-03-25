@@ -22,7 +22,7 @@ const EmailTemplateCards = () => {
                     <div class="flex flex-wrap cursor-pointer">
                         <div class="lg:w-1/3 sm:w-1/2 p-2">
                             <div class="flex relative">
-                                <img alt="gallery" class="absolute inset-0 w-64 h-64 rounded-lg object-cover object-center border-gray-200 border-2 rounded-lg shadow-lg" src="/img/businesstemp-01.PNG" />
+                                <img alt="gallery" class="absolute inset-0 w-64 h-64 rounded-lg object-cover object-center border-gray-200 border-2 rounded-lg shadow-lg" src="/img/businesstemp-01.png" />
                                 <div class="px-8 py-10 relative z-10 w-64 h-64 border-4 border-gray-200 bg-white opacity-0 hover:opacity-90">
                                     <button onClick={() => { childRef.current.handleEmailPreview('businesstemplate_01') }} className="w-full mx-auto mt-16 bg-indigo-700 px-4 py-2 text-white rounded z-50">
                                         Preview
