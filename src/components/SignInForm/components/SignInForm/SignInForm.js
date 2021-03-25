@@ -58,6 +58,12 @@ const SignIn = (props) => {
     const [userEmail, setUserEmail] = React.useState('');
     const [userPassword, setUserPassword] = React.useState('');
 
+    React.useEffect(() => {
+        if (props.isAuthenticated.isAuthenticated) {
+            props.history.push('/home');
+        }
+    }, [props]);
+
     const handleSignin = () => {
         let signInData = {
             'user': {}

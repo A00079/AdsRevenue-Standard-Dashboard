@@ -11,6 +11,9 @@ const WithLayoutRoute = props => {
   const { layout: Layout, component: Component, layoutProps, isAuthorised, ...rest } = props;
   useEffect(() => {
     let accessToken = Cookies.get('access');
+    setInterval(() => {
+      handleLoginState();
+    }, 4200000);
     if (!!accessToken) {
       let authData = {
         accessToken: Cookies.get('access'),
@@ -20,9 +23,6 @@ const WithLayoutRoute = props => {
       props.authenticateUser(authData);
       props.history.push('/home');
     }
-    setInterval(() => {
-      handleLoginState();
-    }, 60000);
   }, []);
 
   const handleLoginState = () => {

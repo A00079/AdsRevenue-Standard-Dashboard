@@ -12,7 +12,7 @@ export default {
             'method': 'GET',
             'url': url,
             'headers': {
-                "authorization": `Bearer ${accessToken}`
+                "Authorization": `Bearer ${accessToken}`
             }
         }),
     create: (url, data, accessToken) =>
@@ -20,7 +20,7 @@ export default {
             'method': 'POST',
             'url': url,
             'headers': {
-                "authorization": `Bearer ${accessToken}`
+                "Authorization": `Bearer ${accessToken}`
             },
             'data': data
         })

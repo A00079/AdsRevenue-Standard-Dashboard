@@ -208,15 +208,13 @@ const MiniDrawer = (props) => {
     const [activeRoute, setActiveRoute] = React.useState('/');
 
     React.useEffect(() => {
-        console.log('props', props.history.location);
         let splitRoute = props.history.location.pathname.split('/');
         if (props.history.location.pathname == '/') {
             setActiveRoute(props.history.location.pathname);
         } else {
             setActiveRoute(splitRoute[1]);
         }
-        getCurrentDate();
-    }, [props]);
+    }, [props.history.pathname]);
 
     const activePanel = (item) => {
         if (item == 'manageemployees') {
@@ -354,7 +352,7 @@ const MiniDrawer = (props) => {
     };
 
     const handleSyncData = () => {
-        standardApi.read('/syncdata',Cookies.get('access')).then((response) => {
+        standardApi.read('/syncdata', Cookies.get('access')).then((response) => {
             console.log('sync data', response.data);
         });
     }
