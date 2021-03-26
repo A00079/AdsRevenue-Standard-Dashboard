@@ -519,7 +519,7 @@ const MiniDrawer = (props) => {
             >
                 <div className={classes.toolbar}>
                     <div className="flex flex-row justify-between items-center">
-                        <img src="/img/dashboardLogo.svg" className="object-contain object-cover w-16 h-16 py-2" />
+                        <img src="/img/DashboardLogo.svg" className="object-contain object-cover w-16 h-16 py-2" />
                         <h4 className="text-gray-600 text-indigo-800 font-bold text-lg ml-2" paragraph>AdsRevenue</h4>
                     </div>
                     <IconButton onClick={handleDrawerClose}>
