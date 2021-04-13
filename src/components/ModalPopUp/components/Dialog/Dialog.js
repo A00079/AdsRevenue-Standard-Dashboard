@@ -69,13 +69,22 @@ const CustomizedDialogs = forwardRef((props, ref) => {
         }),
     )
     const handleEmailTemplateSubmit = () => {
-
+        
         const user = {
             subject: 'AdsRevenue',
             htmlTemplate: previewHtml
         };
+        let base_url = '';
+        if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+            // DEV Code
+            base_url = process.env.REACT_APP_DEV_BASE_URL
 
-        axios.post(`${process.env.REACT_APP_BASE_URL}/api/client/postemail/create`, { user })
+        } else {
+            // PRODUCTION Code
+            base_url = process.env.REACT_APP_PROD_BASE_URL
+        }
+
+        axios.post(`${base_url}/api/client/postemail/create`, { user })
             .then(res => {
                 console.log(res);
                 console.log(res.data);
