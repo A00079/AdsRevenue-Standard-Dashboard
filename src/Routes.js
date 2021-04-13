@@ -40,6 +40,20 @@ const Routes = (props) => {
         />
         <WithLayoutRoute
           exact
+          path="/view-employees"
+          layout={PublicLayout}
+          component={Home}
+          isAuthorised={props.isAuthenticated.isAuthenticated}
+        />
+        <WithLayoutRoute
+          exact
+          path="/single-emails"
+          layout={PublicLayout}
+          component={Home}
+          isAuthorised={props.isAuthenticated.isAuthenticated}
+        />
+        <WithLayoutRoute
+          exact
           path="/sign-in"
           layout={SignInForm}
           component={SignInForm}

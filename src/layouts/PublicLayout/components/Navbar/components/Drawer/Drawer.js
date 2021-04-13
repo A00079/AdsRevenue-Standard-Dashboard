@@ -53,7 +53,7 @@ import ReceiptIcon from '@material-ui/icons/Receipt';
 import Button from '@material-ui/core/Button';
 import { Gauge } from '../../../../../../components/GraphComponents/components';
 import { Dashboard } from '../../../MainSection/components';
-import { AddEmployees } from '../../../MainSection/Views/components';
+import { AddEmployees, SingleEmails, ViewEmployees } from '../../../MainSection/Views/components';
 import HomeIcon from '@material-ui/icons/Home';
 import { withRouter } from "react-router-dom";
 import standardApi from '../../../../../../utils/standardApi/standardApi.js';
@@ -581,15 +581,15 @@ const MiniDrawer = (props) => {
                                 </ListItemIcon>
                                 <ListItemText><span className="text-green-700 font-bold text-xs">Add Employees</span></ListItemText>
                             </ListItem>
-                            <ListItem button className={classes.nested}>
+                            {/* <ListItem button className={classes.nested}>
                                 <ListItemIcon>
                                     <div className="bg-indigo-100 p-0 rounded">
                                         <EditIcon className={open ? 'text-green-700' : 'text-green-700'} />
                                     </div>
                                 </ListItemIcon>
                                 <ListItemText><span className="text-green-700 font-bold text-xs">Add Teams</span></ListItemText>
-                            </ListItem>
-                            <ListItem button className={classes.nested}>
+                            </ListItem> */}
+                            <ListItem button className={classes.nested} onClick={() => { handleRouteChange('view-employees') }}>
                                 <ListItemIcon>
                                     <div className="bg-indigo-100 p-0 rounded">
                                         <EditIcon className={open ? 'text-green-700' : 'text-green-700'} />
@@ -597,14 +597,14 @@ const MiniDrawer = (props) => {
                                 </ListItemIcon>
                                 <ListItemText><span className="text-green-700 font-bold text-xs">View Employees</span></ListItemText>
                             </ListItem>
-                            <ListItem button className={classes.nested}>
+                            {/* <ListItem button className={classes.nested}>
                                 <ListItemIcon>
                                     <div className="bg-indigo-100 p-0 rounded">
                                         <EditIcon className={open ? 'text-green-700' : 'text-green-700'} />
                                     </div>
                                 </ListItemIcon>
                                 <ListItemText><span className="text-green-700 font-bold text-xs">View Teams</span></ListItemText>
-                            </ListItem>
+                            </ListItem> */}
                         </List>
                     </Collapse>
                     <div onClick={() => activePanel('shootemails')} className={activePanelNumber == '2' ? 'border-blue-700 border-l-4 rounded-r-full bg-indigo-100' : 'hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100'}>
@@ -620,7 +620,7 @@ const MiniDrawer = (props) => {
                     </div>
                     <Collapse in={openshootemails} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            <ListItem button className={classes.nested}>
+                            <ListItem button className={classes.nested} onClick={() => { handleRouteChange('single-emails') }}>
                                 <ListItemIcon>
                                     <div className="bg-indigo-100 p-0 rounded ">
                                         <AddBoxIcon className={open ? 'text-green-700' : 'text-green-700'} />
@@ -780,6 +780,12 @@ const MiniDrawer = (props) => {
                     }
                     {
                         activeRoute == 'add-employees' ? <AddEmployees /> : ''
+                    }
+                    {
+                        activeRoute == 'view-employees' ? <ViewEmployees /> : ''
+                    }
+                    {
+                        activeRoute == 'single-emails' ? <SingleEmails /> : ''
                     }
                 </Typography>
                 <Typography paragraph>
