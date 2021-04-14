@@ -2,9 +2,9 @@ import React from "react";
 import Lottie from "react-lottie";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import animationData from "../../../../../../lotties/admin.json";
+import animationData from "../../../../../../../lotties/admin.json";
 import { withRouter } from "react-router-dom";
-import { authenticateUser } from "../../../../../../actions/authActions.js";
+import { authenticateUser } from "../../../../../../../actions/authActions.js";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -14,15 +14,15 @@ import {
   HelpCenter,
   SalesPersonFilter,
   EmailTemplateCards,
-} from "..";
-import Cookies from 'js-cookie';
-
-import "./Dashboard.css";
+} from "../../../components";
+import Cookies from "js-cookie";
+import "./EmployeeHome.css";
+import EmpCreateProject from "../EmpCreateProject";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const Dashboard = (props) => {
+const EmployeeHomeScreen = (props) => {
   const [showNotification, setShowNotification] = React.useState(false);
   const [authRole, setAuthRole] = React.useState("");
   const [userFullName, setUserFullName] = React.useState("");
@@ -81,13 +81,8 @@ const Dashboard = (props) => {
                 </div>
               </div>
             </div>
-            {/* <section className="main-emp-details flex flex-wrap justify-start mt-1 sm:mt-1  space-x-0">
-                            <SalesPersonFilter />
-                            <SalesPersonFilter />
-                            <SalesPersonFilter />
-                        </section> */}
             <section className="mt-2 h-64 sm:h-96 overflow-auto custom-scroll scrollbar">
-              <EmailTemplateCards />
+              <EmpCreateProject />
             </section>
           </div>
           <div className="w-full sm:w-1/2 short-employee-info mt-96 sm:mt-0 ">
@@ -120,7 +115,7 @@ const Dashboard = (props) => {
   );
 };
 
-Dashboard.propTypes = {
+EmployeeHomeScreen.propTypes = {
   authrole: PropTypes.object.isRequired,
 };
 
@@ -129,5 +124,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { authenticateUser })(Dashboard)
+  connect(mapStateToProps, { authenticateUser })(EmployeeHomeScreen)
 );

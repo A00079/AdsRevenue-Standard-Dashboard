@@ -11,11 +11,13 @@ const WithLayoutRoute = props => {
   const { layout: Layout, component: Component, layoutProps, isAuthorised, ...rest } = props;
   useEffect(() => {
     let accessToken = Cookies.get('access');
+    console.log('authrole',props.isAuthenticated.authrole);
     setInterval(() => {
       handleLoginState();
     }, 4200000);
     if (!!accessToken) {
       let authData = {
+        authrole: Cookies.get('authrole'),
         accessToken: Cookies.get('access'),
         refreshToken: Cookies.get('refresh'),
         isAuthenticated: true
@@ -36,6 +38,7 @@ const WithLayoutRoute = props => {
         } else {
           Cookies.set('access', res.data.accessToken);
           let authData = {
+            authrole: res.data.authrole,
             accessToken: res.data.accessToken,
             refreshToken: res.data.refreshToken,
             isAuthenticated: true
@@ -49,6 +52,7 @@ const WithLayoutRoute = props => {
     } else {
       props.history.push("/sign-in");
       let authData = {
+        authrole: null,
         accessToken: null,
         refreshToken: null,
         isAuthenticated: false
@@ -64,6 +68,7 @@ const WithLayoutRoute = props => {
       if (res.data.message === 'success') {
         Cookies.set('access', res.data.accessToken);
         let authData = {
+          authrole:res.data.authrole,
           accessToken: res.data.accessToken,
           refreshToken: res.data.refreshToken,
           isAuthenticated: true
@@ -74,6 +79,7 @@ const WithLayoutRoute = props => {
         console.log('Invalid Refresh Token');
         props.history.push("/sign-in");
         let authData = {
+          authrole:res.data.authrole,
           accessToken: res.data.accessToken,
           refreshToken: res.data.refreshToken,
           isAuthenticated: false
@@ -106,10 +112,12 @@ WithLayoutRoute.propTypes = {
   layout: PropTypes.any.isRequired,
   isAuthorised: PropTypes.bool,
   path: PropTypes.string,
-  isAuthenticated: PropTypes.object.isRequired
+  isAuthenticated: PropTypes.object.isRequired,
+  authrole: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
+  authrole: state.authrole,
   isAuthenticated: state.isAuthenticated
 });
 

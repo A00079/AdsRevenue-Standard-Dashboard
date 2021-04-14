@@ -2,7 +2,6 @@ import { AUTHENTICATE_USER } from "./types";
 
 export const authenticateUser = authVal => dispatch => {
   // Set token to localStorage
-  console.log('My First Val AuthAction...',authVal);
   dispatch(setCurrentUser(authVal));
   localStorage.setItem("authorizer", 'lkuokuy97rjtjaopewr90464-4jfkdfoeiwt-jdjfiodfj');
 };
