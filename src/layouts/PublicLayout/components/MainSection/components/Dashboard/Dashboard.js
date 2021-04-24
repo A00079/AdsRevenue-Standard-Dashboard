@@ -110,7 +110,7 @@ const Dashboard = (props) => {
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={showNotification}
-        autoHideDuration={3000}
+        autoHideDuration={4500}
       >
         <Alert severity="success">
           <p className="font-bold capitalize">Logged in has {authRole}</p>

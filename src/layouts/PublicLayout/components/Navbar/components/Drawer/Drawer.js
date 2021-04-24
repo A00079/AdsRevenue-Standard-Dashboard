@@ -54,6 +54,7 @@ import { Gauge } from "../../../../../../components/GraphComponents/components";
 import { Dashboard } from "../../../MainSection/components";
 import {
   AddEmployees,
+  ManageProjects,
   SingleEmails,
   ViewEmployees,
 } from "../../../MainSection/Views/components";
@@ -238,7 +239,7 @@ const MiniDrawer = (props) => {
     } else if (item == "shootmessages") {
       setActivePanelNumber("4");
     } else if (item == "home") {
-      props.history.push("/");
+      props.history.push("/home");
       setActivePanelNumber("5");
     }
     handleDrawerOpen();
@@ -715,7 +716,7 @@ const MiniDrawer = (props) => {
                 </ListItemIcon>
                 <ListItemText>
                   <span className="text-sm text-purple-800 font-bold">
-                    Manage Affiliates
+                    Manage Projects
                   </span>
                 </ListItemText>
                 {openEmployees ? <ExpandLess /> : <ExpandMore />}
@@ -729,19 +730,19 @@ const MiniDrawer = (props) => {
                 button
                 className={classes.nested}
                 onClick={() => {
-                  handleRouteChange("add-affiliates");
+                  handleRouteChange("view-projects");
                 }}
               >
                 <ListItemIcon>
                   <div className="bg-indigo-100 p-0 rounded ">
-                    <AddBoxIcon
+                    <EditIcon
                       className={open ? "text-green-700" : "text-green-700"}
                     />
                   </div>
                 </ListItemIcon>
                 <ListItemText>
                   <span className="text-green-700 font-bold text-xs">
-                    Add Affiliates
+                    View Projects
                   </span>
                 </ListItemText>
               </ListItem>
@@ -1050,7 +1051,7 @@ const MiniDrawer = (props) => {
             </ListItem>
           </div>
         </List>
-        {open ? (
+        {/* {open ? (
           <div class="p-2 pt-0 w-full">
             <div class="h-full flex items-center border-gray-100 shadow-sm border-2 p-1 rounded-lg">
               <img
@@ -1074,7 +1075,7 @@ const MiniDrawer = (props) => {
             class="w-12 h-12 object-cover object-center mx-auto flex-shrink-0 rounded-lg mr-4"
             src="/img/feedback.svg"
           />
-        )}
+        )} */}
       </Drawer>
       <main className={clsx(classes.content, "w-full")}>
         <div className={classes.toolbar} />
@@ -1082,11 +1083,21 @@ const MiniDrawer = (props) => {
           {activeRoute == "home" && props.authrole == "admin" ? (
             <Dashboard />
           ) : (
-            <EmployeeHomeScreen />
+            null
           )}
-          {activeRoute == "add-employees" ? <AddEmployees /> : ""}
-          {activeRoute == "view-employees" ? <ViewEmployees /> : ""}
+          {activeRoute == "home" && props.authrole == "employee" ? (
+            <EmployeeHomeScreen />
+          ) : (
+            null
+          )}
+          {activeRoute == "add-employees" && props.authrole == "admin" ? <AddEmployees /> : ""}
+          {activeRoute == "view-employees" && props.authrole == "admin" ? <ViewEmployees /> : ""}
           {activeRoute == "single-emails" ? <SingleEmails /> : ""}
+          {activeRoute == "view-projects" && props.authrole == "employee" ? (
+            <ManageProjects />
+          ) : (
+            ""
+          )}
         </Typography>
         <Typography paragraph></Typography>
       </main>
@@ -1096,7 +1107,7 @@ const MiniDrawer = (props) => {
 
 MiniDrawer.propTypes = {
   isAuthenticated: PropTypes.object.isRequired,
-  authrole: PropTypes.object.isRequired,
+  authrole: PropTypes.any.isRequired,
 };
 
 const mapStateToProps = (state) => ({

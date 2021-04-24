@@ -27,7 +27,48 @@ const EmployeeHomeScreen = (props) => {
   const [authRole, setAuthRole] = React.useState("");
   const [userFullName, setUserFullName] = React.useState("");
   const [userEmail, setUserEmail] = React.useState("");
-
+  let empInfoData = [
+    {
+      'label': 'Total Affiliates',
+      'count': '28'
+    },
+    {
+      'label': 'Total Projects',
+      'count': '16'
+    }
+  ];
+  let empLoggedInData = [
+    {
+      'name': 'Holden Caulfield',
+      'email': 'holden@gmail.com',
+      'logintime': '10:02:54',
+      'logindate': '14-03-2021'
+    },
+    {
+      'name': 'Sherlok Holmes',
+      'email': 'sherlok@gmail.com',
+      'logintime': '8:10:45',
+      'logindate': '16-06-2021'
+    },
+    {
+      'name': 'Robert James',
+      'email': 'robert@gmail.com',
+      'logintime': '10:02:54',
+      'logindate': '14-03-2021'
+    },
+    {
+      'name': 'Mike Jhons',
+      'email': 'mike@gmail.com',
+      'logintime': '8:10:45',
+      'logindate': '16-06-2021'
+    },
+    {
+      'name': 'Mike Jhons',
+      'email': 'mike@gmail.com',
+      'logintime': '8:10:45',
+      'logindate': '16-06-2021'
+    }
+  ];
   React.useEffect(() => {
     setAuthRole(props.authrole);
     setShowNotification(true);
@@ -59,7 +100,7 @@ const EmployeeHomeScreen = (props) => {
             >
               <div class="lg:flex-grow md:w-1/2 mb-0 lg:pr-24 md:pr-0 flex flex-col md:items-start md:text-left sm:mb-16 md:mb-0 items-center text-center">
                 <h1
-                  class="title-font text-lg lg:text-xl mb-1 font-bold"
+                  class="title-font w-96 text-lg lg:text-xl mb-1 font-bold"
                   style={{ color: "#88D985" }}
                 >
                   Welcome back!{" "}
@@ -81,21 +122,21 @@ const EmployeeHomeScreen = (props) => {
                 </div>
               </div>
             </div>
-            <section className="mt-2 h-64 sm:h-96 overflow-auto custom-scroll scrollbar">
+            {/* <section className="mt-2 h-64 sm:h-96 overflow-auto custom-scroll scrollbar"> */}
+            <section className="mt-2 h-64 sm:h-96 bg-white p-2 rounded-md">
               <EmpCreateProject />
             </section>
           </div>
           <div className="w-full sm:w-1/2 short-employee-info mt-96 sm:mt-0 ">
             <div className="employee-info mt-2 sm:mt-0">
-              <EmployeeInfo />
+              <EmployeeInfo data={empInfoData} />
             </div>
             <div className="logged-in-emp-details mt-2">
-              <LoggedInEmployees />
+              <LoggedInEmployees data={empLoggedInData} />
             </div>
-            <div className="team-info mt-1">
-              <p className="text-gray-600 text-sm font-semibold py-1">Teams</p>
+            {/* <div className="team-info mt-1">
               <TotalTeams />
-            </div>
+            </div> */}
             <div className="need-help">
               <HelpCenter />
             </div>

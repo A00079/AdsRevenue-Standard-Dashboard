@@ -113,7 +113,6 @@ WithLayoutRoute.propTypes = {
   isAuthorised: PropTypes.bool,
   path: PropTypes.string,
   isAuthenticated: PropTypes.object.isRequired,
-  authrole: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

@@ -19,7 +19,7 @@ import {
 } from "react-device-detect";
 const Routes = (props) => {
   useEffect(() =>{
-    console.log('props.isAuthenticated.isAuthenticated',props.isAuthenticated.isAuthenticated);
+    // console.log('props.isAuthenticated.isAuthenticated',props.isAuthenticated.isAuthenticated);
   },[])
   return (
     <Router>
@@ -34,6 +34,13 @@ const Routes = (props) => {
         <WithLayoutRoute
           exact
           path="/add-employees"
+          layout={PublicLayout}
+          component={Home}
+          isAuthorised={props.isAuthenticated.isAuthenticated}
+        />
+        <WithLayoutRoute
+          exact
+          path="/view-projects"
           layout={PublicLayout}
           component={Home}
           isAuthorised={props.isAuthenticated.isAuthenticated}
