@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useEffect } from "react";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { WithLayoutRoute } from "./routers";
 import { PublicLayout, SecondaryPublicLayout } from "./layouts";
-import { SignInForm } from "./components/SignInForm/components";
+import { SignInForm, AffiliateSignIn } from "./components/SignInForm/components";
 import PropTypes from 'prop-types';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -18,9 +18,9 @@ import {
   isMobile,
 } from "react-device-detect";
 const Routes = (props) => {
-  useEffect(() =>{
+  useEffect(() => {
     // console.log('props.isAuthenticated.isAuthenticated',props.isAuthenticated.isAuthenticated);
-  },[])
+  }, [])
   return (
     <Router>
       <Switch>
@@ -54,6 +54,13 @@ const Routes = (props) => {
         />
         <WithLayoutRoute
           exact
+          path="/manage-affiliate/:aff_id"
+          layout={PublicLayout}
+          component={Home}
+          isAuthorised={props.isAuthenticated.isAuthenticated}
+        />
+        <WithLayoutRoute
+          exact
           path="/single-emails"
           layout={PublicLayout}
           component={Home}
@@ -64,6 +71,13 @@ const Routes = (props) => {
           path="/sign-in"
           layout={SignInForm}
           component={SignInForm}
+          isAuthorised={true}
+        />
+        <WithLayoutRoute
+          exact
+          path="/affiliate-signin"
+          layout={AffiliateSignIn}
+          component={AffiliateSignIn}
           isAuthorised={true}
         />
         <Route path="*" component={() => "404 NOT FOUND"} />

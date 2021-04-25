@@ -54,6 +54,8 @@ import { Gauge } from "../../../../../../components/GraphComponents/components";
 import { Dashboard } from "../../../MainSection/components";
 import {
   AddEmployees,
+  AffiliateHomeScreen,
+  ManageAffiliates,
   ManageProjects,
   SingleEmails,
   ViewEmployees,
@@ -227,7 +229,7 @@ const MiniDrawer = (props) => {
       setUserFullName(Cookies.get("fullname"));
       setUserEmail(Cookies.get("email"));
     }
-  }, [props.history.pathname]);
+  }, [props]);
 
   const activePanel = (item) => {
     if (item == "manageemployees") {
@@ -667,389 +669,394 @@ const MiniDrawer = (props) => {
               </ListItemText>
             </ListItem>
           </div>
-          {props.authrole == "admin" ? (
-            <div
-              onClick={() => activePanel("manageemployees")}
-              className={
-                activePanelNumber == "1"
-                  ? "border-blue-700 border-l-4 rounded-r-full bg-indigo-100"
-                  : "hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100"
-              }
-            >
-              <ListItem button onClick={handleEmployees}>
-                <ListItemIcon
-                  style={open ? { minWidth: "40px" } : { minWidth: "60px" }}
-                >
-                  <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
-                    <GroupAddIcon
-                      className={open ? "text-red-800" : "text-red-800"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-sm text-purple-800 font-bold">
-                    Manage Employees
+          {
+            props.authrole == "affiliate" ? null :
+              <React.Fragment>
+                {props.authrole == "admin" ? (
+                  <div
+                    onClick={() => activePanel("manageemployees")}
+                    className={
+                      activePanelNumber == "1"
+                        ? "border-blue-700 border-l-4 rounded-r-full bg-indigo-100"
+                        : "hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100"
+                    }
+                  >
+                    <ListItem button onClick={handleEmployees}>
+                      <ListItemIcon
+                        style={open ? { minWidth: "40px" } : { minWidth: "60px" }}
+                      >
+                        <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
+                          <GroupAddIcon
+                            className={open ? "text-red-800" : "text-red-800"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-sm text-purple-800 font-bold">
+                          Manage Employees
                   </span>
-                </ListItemText>
-                {openEmployees ? <ExpandLess /> : <ExpandMore />}
-              </ListItem>
-            </div>
-          ) : null}
-          {props.authrole == "employee" ? (
-            <div
-              onClick={() => activePanel("manageemployees")}
-              className={
-                activePanelNumber == "1"
-                  ? "border-blue-700 border-l-4 rounded-r-full bg-indigo-100"
-                  : "hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100"
-              }
-            >
-              <ListItem button onClick={handleEmployees}>
-                <ListItemIcon
-                  style={open ? { minWidth: "40px" } : { minWidth: "60px" }}
-                >
-                  <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
-                    <GroupAddIcon
-                      className={open ? "text-red-800" : "text-red-800"}
-                    />
+                      </ListItemText>
+                      {openEmployees ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
                   </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-sm text-purple-800 font-bold">
-                    Manage Projects
+                ) : null}
+                {props.authrole == "employee" ? (
+                  <div
+                    onClick={() => activePanel("manageemployees")}
+                    className={
+                      activePanelNumber == "1"
+                        ? "border-blue-700 border-l-4 rounded-r-full bg-indigo-100"
+                        : "hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100"
+                    }
+                  >
+                    <ListItem button onClick={handleEmployees}>
+                      <ListItemIcon
+                        style={open ? { minWidth: "40px" } : { minWidth: "60px" }}
+                      >
+                        <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
+                          <GroupAddIcon
+                            className={open ? "text-red-800" : "text-red-800"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-sm text-purple-800 font-bold">
+                          Manage Projects
                   </span>
-                </ListItemText>
-                {openEmployees ? <ExpandLess /> : <ExpandMore />}
-              </ListItem>
-            </div>
-          ) : null}
+                      </ListItemText>
+                      {openEmployees ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                  </div>
+                ) : null}
 
-          <Collapse in={openEmployees} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem
-                button
-                className={classes.nested}
-                onClick={() => {
-                  handleRouteChange("view-projects");
-                }}
-              >
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded ">
-                    <EditIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs">
-                    View Projects
+                <Collapse in={openEmployees} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    <ListItem
+                      button
+                      className={classes.nested}
+                      onClick={() => {
+                        handleRouteChange("view-projects");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded ">
+                          <EditIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs">
+                          View Projects
                   </span>
-                </ListItemText>
-              </ListItem>
-              <ListItem
-                button
-                className={classes.nested}
-                onClick={() => {
-                  handleRouteChange("view-affiliates");
-                }}
-              >
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded">
-                    <EditIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs">
-                    View Affiliates
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem
+                      button
+                      className={classes.nested}
+                      onClick={() => {
+                        handleRouteChange("view-affiliates");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded">
+                          <EditIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs">
+                          View Affiliates
                   </span>
-                </ListItemText>
-              </ListItem>
-            </List>
-          </Collapse>
-          <div
-            onClick={() => activePanel("shootemails")}
-            className={
-              activePanelNumber == "2"
-                ? "border-blue-700 border-l-4 rounded-r-full bg-indigo-100"
-                : "hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100"
-            }
-          >
-            <ListItem button onClick={handleShootemails}>
-              <ListItemIcon
-                style={open ? { minWidth: "40px" } : { minWidth: "60px" }}
-              >
-                <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
-                  <EmailIcon
-                    className={open ? "text-red-800" : "text-red-800"}
-                  />
-                </div>
-              </ListItemIcon>
-              <ListItemText>
-                <span className="text-sm text-purple-800 font-bold">
-                  Shoot Emails
+                      </ListItemText>
+                    </ListItem>
+                  </List>
+                </Collapse>
+                <div
+                  onClick={() => activePanel("shootemails")}
+                  className={
+                    activePanelNumber == "2"
+                      ? "border-blue-700 border-l-4 rounded-r-full bg-indigo-100"
+                      : "hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100"
+                  }
+                >
+                  <ListItem button onClick={handleShootemails}>
+                    <ListItemIcon
+                      style={open ? { minWidth: "40px" } : { minWidth: "60px" }}
+                    >
+                      <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
+                        <EmailIcon
+                          className={open ? "text-red-800" : "text-red-800"}
+                        />
+                      </div>
+                    </ListItemIcon>
+                    <ListItemText>
+                      <span className="text-sm text-purple-800 font-bold">
+                        Shoot Emails
                 </span>
-              </ListItemText>
-              {openshootemails ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-          </div>
-          <Collapse in={openshootemails} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem
-                button
-                className={classes.nested}
-                onClick={() => {
-                  handleRouteChange("single-emails");
-                }}
-              >
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded ">
-                    <AddBoxIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs">
-                    Single Email
-                  </span>
-                </ListItemText>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded">
-                    <EditIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs">
-                    Bluck Emails
-                  </span>
-                </ListItemText>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded">
-                    <EditIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs">
-                    External File
-                  </span>
-                </ListItemText>
-              </ListItem>
-            </List>
-          </Collapse>
-          <div
-            onClick={() => activePanel("emailtemplates")}
-            className={
-              activePanelNumber == "3"
-                ? "border-blue-700 border-l-4 rounded-r-full bg-indigo-100"
-                : "hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100"
-            }
-          >
-            <ListItem button onClick={handleEmailTemplates}>
-              <ListItemIcon
-                style={open ? { minWidth: "40px" } : { minWidth: "60px" }}
-              >
-                <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
-                  <ReceiptIcon
-                    className={open ? "text-purple-800" : "text-purple-800"}
-                  />
+                    </ListItemText>
+                    {openshootemails ? <ExpandLess /> : <ExpandMore />}
+                  </ListItem>
                 </div>
-              </ListItemIcon>
-              <ListItemText>
-                <span className="text-sm text-purple-800 font-bold">
-                  Email Templates
+                <Collapse in={openshootemails} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    <ListItem
+                      button
+                      className={classes.nested}
+                      onClick={() => {
+                        handleRouteChange("single-emails");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded ">
+                          <AddBoxIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs">
+                          Single Email
+                  </span>
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded">
+                          <EditIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs">
+                          Bluck Emails
+                  </span>
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded">
+                          <EditIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs">
+                          External File
+                  </span>
+                      </ListItemText>
+                    </ListItem>
+                  </List>
+                </Collapse>
+                <div
+                  onClick={() => activePanel("emailtemplates")}
+                  className={
+                    activePanelNumber == "3"
+                      ? "border-blue-700 border-l-4 rounded-r-full bg-indigo-100"
+                      : "hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100"
+                  }
+                >
+                  <ListItem button onClick={handleEmailTemplates}>
+                    <ListItemIcon
+                      style={open ? { minWidth: "40px" } : { minWidth: "60px" }}
+                    >
+                      <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
+                        <ReceiptIcon
+                          className={open ? "text-purple-800" : "text-purple-800"}
+                        />
+                      </div>
+                    </ListItemIcon>
+                    <ListItemText>
+                      <span className="text-sm text-purple-800 font-bold">
+                        Email Templates
                 </span>
-              </ListItemText>
-              {openemailtemplates ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-          </div>
-          <Collapse in={openemailtemplates} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded ">
-                    <AddBoxIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs break-words">
-                    Business Services
-                  </span>
-                </ListItemText>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded ">
-                    <EditIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs break-words">
-                    Marketing
-                  </span>
-                </ListItemText>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded ">
-                    <EditIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs break-words">
-                    Events
-                  </span>
-                </ListItemText>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded ">
-                    <EditIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs break-words">
-                    Newsletter
-                  </span>
-                </ListItemText>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded ">
-                    <EditIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs break-words">
-                    Service Promotion
-                  </span>
-                </ListItemText>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded ">
-                    <EditIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs break-words">
-                    Product Promotion
-                  </span>
-                </ListItemText>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded ">
-                    <EditIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs break-words">
-                    Welcome
-                  </span>
-                </ListItemText>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded ">
-                    <EditIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs break-words">
-                    Thankyou
-                  </span>
-                </ListItemText>
-              </ListItem>
-            </List>
-          </Collapse>
-          <div
-            onClick={() => activePanel("shootmessages")}
-            className={
-              activePanelNumber == "4"
-                ? "pointer-events-none border-blue-700 border-l-4 rounded-r-full bg-indigo-100"
-                : "pointer-events-none hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100"
-            }
-          >
-            <ListItem button onClick={handleShootMessages}>
-              <ListItemIcon
-                style={open ? { minWidth: "40px" } : { minWidth: "60px" }}
-              >
-                <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
-                  <RateReviewIcon
-                    className={open ? "text-yellow-500" : "text-yellow-500"}
-                  />
+                    </ListItemText>
+                    {openemailtemplates ? <ExpandLess /> : <ExpandMore />}
+                  </ListItem>
                 </div>
-              </ListItemIcon>
-              <ListItemText>
-                <span className="text-sm text-purple-800 font-bold">
-                  Shoot Messages
-                </span>
-              </ListItemText>
-              {openshootmessages ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-          </div>
-          <Collapse in={openshootmessages} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <div className="bg-indigo-100 p-0 rounded ">
-                    <AddLocationIcon
-                      className={open ? "text-green-700" : "text-green-700"}
-                    />
-                  </div>
-                </ListItemIcon>
-                <ListItemText>
-                  <span className="text-green-700 font-bold text-xs break-words">
-                    Bulk Messages
+                <Collapse in={openemailtemplates} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded ">
+                          <AddBoxIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs break-words">
+                          Business Services
                   </span>
-                </ListItemText>
-              </ListItem>
-            </List>
-          </Collapse>
-          <div className="hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100">
-            <ListItem button>
-              <ListItemIcon
-                style={open ? { minWidth: "40px" } : { minWidth: "60px" }}
-              >
-                <div className="bg-indigo-100 p-2 rounded -mx-2 sm:-mx-2">
-                  <ExitToAppIcon
-                    className={open ? "text-blue-700" : "text-blue-700"}
-                  />
-                </div>
-              </ListItemIcon>
-              <ListItemText>
-                <span className="text-sm text-purple-800 font-bold">
-                  Logout
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded ">
+                          <EditIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs break-words">
+                          Marketing
+                  </span>
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded ">
+                          <EditIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs break-words">
+                          Events
+                  </span>
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded ">
+                          <EditIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs break-words">
+                          Newsletter
+                  </span>
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded ">
+                          <EditIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs break-words">
+                          Service Promotion
+                  </span>
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded ">
+                          <EditIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs break-words">
+                          Product Promotion
+                  </span>
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded ">
+                          <EditIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs break-words">
+                          Welcome
+                  </span>
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded ">
+                          <EditIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs break-words">
+                          Thankyou
+                  </span>
+                      </ListItemText>
+                    </ListItem>
+                  </List>
+                </Collapse>
+                <div
+                  onClick={() => activePanel("shootmessages")}
+                  className={
+                    activePanelNumber == "4"
+                      ? "pointer-events-none border-blue-700 border-l-4 rounded-r-full bg-indigo-100"
+                      : "pointer-events-none hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100"
+                  }
+                >
+                  <ListItem button onClick={handleShootMessages}>
+                    <ListItemIcon
+                      style={open ? { minWidth: "40px" } : { minWidth: "60px" }}
+                    >
+                      <div className="bg-indigo-100 p-2 rounded -mx-3 sm:-mx-2">
+                        <RateReviewIcon
+                          className={open ? "text-yellow-500" : "text-yellow-500"}
+                        />
+                      </div>
+                    </ListItemIcon>
+                    <ListItemText>
+                      <span className="text-sm text-purple-800 font-bold">
+                        Shoot Messages
                 </span>
-              </ListItemText>
-            </ListItem>
-          </div>
+                    </ListItemText>
+                    {openshootmessages ? <ExpandLess /> : <ExpandMore />}
+                  </ListItem>
+                </div>
+                <Collapse in={openshootmessages} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <div className="bg-indigo-100 p-0 rounded ">
+                          <AddLocationIcon
+                            className={open ? "text-green-700" : "text-green-700"}
+                          />
+                        </div>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <span className="text-green-700 font-bold text-xs break-words">
+                          Bulk Messages
+                  </span>
+                      </ListItemText>
+                    </ListItem>
+                  </List>
+                </Collapse>
+                <div className="hover:border-blue-700 border-l-4 rounded-r-full hover:bg-indigo-100">
+                  <ListItem button>
+                    <ListItemIcon
+                      style={open ? { minWidth: "40px" } : { minWidth: "60px" }}
+                    >
+                      <div className="bg-indigo-100 p-2 rounded -mx-2 sm:-mx-2">
+                        <ExitToAppIcon
+                          className={open ? "text-blue-700" : "text-blue-700"}
+                        />
+                      </div>
+                    </ListItemIcon>
+                    <ListItemText>
+                      <span className="text-sm text-purple-800 font-bold">
+                        Logout
+                </span>
+                    </ListItemText>
+                  </ListItem>
+                </div>
+              </React.Fragment>
+          }
         </List>
         {/* {open ? (
           <div class="p-2 pt-0 w-full">
@@ -1090,11 +1097,21 @@ const MiniDrawer = (props) => {
           ) : (
             null
           )}
+          {activeRoute == "home" && props.authrole == "affiliate" ? (
+            <AffiliateHomeScreen />
+          ) : (
+            null
+          )}
           {activeRoute == "add-employees" && props.authrole == "admin" ? <AddEmployees /> : ""}
           {activeRoute == "view-employees" && props.authrole == "admin" ? <ViewEmployees /> : ""}
           {activeRoute == "single-emails" ? <SingleEmails /> : ""}
           {activeRoute == "view-projects" && props.authrole == "employee" ? (
             <ManageProjects />
+          ) : (
+            ""
+          )}
+          {activeRoute == "manage-affiliate" && props.authrole == "employee" ? (
+            <ManageAffiliates />
           ) : (
             ""
           )}

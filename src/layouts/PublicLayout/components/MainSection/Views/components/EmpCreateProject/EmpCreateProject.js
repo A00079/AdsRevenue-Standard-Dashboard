@@ -4,6 +4,7 @@ import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EmpCreateProject = () => {
+const EmpCreateProject = (props) => {
   const childRef = useRef();
   const classes = useStyles();
   const [affProjects, setAffProjects] = useState([]);
@@ -47,6 +48,10 @@ const EmpCreateProject = () => {
       console.log('Error:', err);
     });
   }, []);
+
+  const handleRouteChange = (currentRoute, affid) => {
+    props.history.push("/" + currentRoute + '/' + affid);
+  };
 
   const handlefetchTeamMembers = (projectid, pro_index) => {
     let projectscontainer = document.querySelectorAll('#projectcontainer');
@@ -109,7 +114,7 @@ const EmpCreateProject = () => {
                             <div class="transform translate-y-0.5 text-left ml-2 w-full">
                               <div className='flex flex-row w-full justify-between'>
                                 <h3 class="leading-4 text-sm font-bold text-indigo-700 capitalize">{el.affname}</h3>
-                                <div>
+                                <div onClick={() => { handleRouteChange('manage-affiliate', el.affiliate_id) }}>
                                   <svg class="w-4 h-4 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
                                 </div>
                               </div>
@@ -177,4 +182,4 @@ const EmpCreateProject = () => {
   );
 };
 
-export default EmpCreateProject;
+export default withRouter(EmpCreateProject);

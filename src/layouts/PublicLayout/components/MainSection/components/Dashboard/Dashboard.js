@@ -27,7 +27,48 @@ const Dashboard = (props) => {
   const [authRole, setAuthRole] = React.useState("");
   const [userFullName, setUserFullName] = React.useState("");
   const [userEmail, setUserEmail] = React.useState("");
-
+  let empInfoData = [
+    {
+      'label': 'Total Affiliates',
+      'count': '28'
+    },
+    {
+      'label': 'Total Projects',
+      'count': '16'
+    }
+  ];
+  let empLoggedInData = [
+    {
+      'name': 'Holden Caulfield',
+      'email': 'holden@gmail.com',
+      'logintime': '10:02:54',
+      'logindate': '14-03-2021'
+    },
+    {
+      'name': 'Sherlok Holmes',
+      'email': 'sherlok@gmail.com',
+      'logintime': '8:10:45',
+      'logindate': '16-06-2021'
+    },
+    {
+      'name': 'Robert James',
+      'email': 'robert@gmail.com',
+      'logintime': '10:02:54',
+      'logindate': '14-03-2021'
+    },
+    {
+      'name': 'Mike Jhons',
+      'email': 'mike@gmail.com',
+      'logintime': '8:10:45',
+      'logindate': '16-06-2021'
+    },
+    {
+      'name': 'Mike Jhons',
+      'email': 'mike@gmail.com',
+      'logintime': '8:10:45',
+      'logindate': '16-06-2021'
+    }
+  ];
   React.useEffect(() => {
     setAuthRole(props.authrole);
     setShowNotification(true);
@@ -92,10 +133,10 @@ const Dashboard = (props) => {
           </div>
           <div className="w-full sm:w-1/2 short-employee-info mt-96 sm:mt-0 ">
             <div className="employee-info mt-2 sm:mt-0">
-              <EmployeeInfo />
+              <EmployeeInfo data={empInfoData} />
             </div>
             <div className="logged-in-emp-details mt-2">
-              <LoggedInEmployees />
+              <LoggedInEmployees data={empLoggedInData} />
             </div>
             <div className="team-info mt-1">
               <p className="text-gray-600 text-sm font-semibold py-1">Teams</p>

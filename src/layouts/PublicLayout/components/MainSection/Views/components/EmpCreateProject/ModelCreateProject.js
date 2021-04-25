@@ -122,6 +122,7 @@ const CreateProject = forwardRef((props, ref) => {
         projectData.projectdetails = dataArr;
         console.log('Project Details', projectData);
         teamMembers.map((el, index) => {
+            el['affiliate_id'] = Math.random().toString(36).substr(2, 9);
             el['project'] = projectData.projectdetails[0].project_id;
             el['empname'] = Cookies.get("fullname");
             el['empemail'] = Cookies.get("email");
